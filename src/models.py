@@ -1,8 +1,3 @@
-'''
-Created on 4 ene. 2018
-
-@author: Adrián
-'''
 from google.appengine.ext import ndb
     
 class Usuario(ndb.Model):

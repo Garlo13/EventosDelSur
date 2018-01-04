@@ -1,8 +1,3 @@
-'''
-Created on 4 ene. 2018
-
-@author: Adrián
-'''
 from datetime import datetime
 import os
 import webapp2
@@ -30,5 +25,5 @@ class BaseHandler(webapp2.RequestHandler):
 class ShowEventos(BaseHandler):
     
     def get(self):
-        #eventos = Eventos.query()
-        self.render_template('eventos.html') #, {'eventos': eventos})
+        eventos = Eventos.query()
+        self.render_template('eventos.html', {'eventos':eventos})
