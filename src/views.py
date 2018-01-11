@@ -2,6 +2,7 @@ from datetime import datetime
 import os
 import webapp2
 import jinja2
+#import googlemaps
 
 from google.appengine.ext import ndb
 
@@ -76,4 +77,17 @@ class EditEvento(BaseHandler):
         evento.fechaInicio=self.request.get('fechaInicio')
         evento.fechaFin=self.request.get('fechaFin')
         evento.put()
+        return webapp2.redirect('/')
+
+class OpenEvento(BaseHandler):
+    def get(self, evento_id):
+        iden = int(evento_id)
+        evento = Eventos.get_by_id(iden)
+        #gmaps = googlemaps.Client(key='ce467785e4e6b7dc282e86e0f2268c26')
+        #reverse_geocode_result = gmaps.reverse_geocode((evento.latitud, evento.longitud))
+        #now = datetime.now()
+        #self.render_template('verEvento.html', {'evento':evento, 'map':reverse_geocode_result})
+        self.render_template('verEvento.html', {'evento': evento})
+
+    def post(selfs, evento_id):
         return webapp2.redirect('/')
