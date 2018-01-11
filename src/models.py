@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
-    
+
+
 class Usuario(ndb.Model):
     nombre = ndb.StringProperty()
     email = ndb.StringProperty()
@@ -15,8 +16,8 @@ class Eventos(ndb.Model):
     creador = ndb.StructuredProperty(Usuario)
     latitud = ndb.FloatProperty()
     longitud = ndb.FloatProperty()
-    fechaInicio = ndb.DateTimeProperty()
-    fechaFin = ndb.DateTimeProperty()
+    fechaInicio = ndb.StringProperty()
+    fechaFin = ndb.StringProperty()
     likes = ndb.StructuredProperty(Usuario, repeated=True)
     comentarios = ndb.StructuredProperty(Comentario, repeated=True)
     

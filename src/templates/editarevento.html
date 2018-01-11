@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Bootstrap Core CSS -->
+<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+<link href="../static/css/style.css" rel="stylesheet">
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h1>Editar evento <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></h1>
+    </div>
+</div>
+<br/>
+<br/>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <form class="form-horizontal" role="form" action="" method="post">
+            <div class="form-group">
+				<label for="inputText" class="col-sm-3 control-label">Nombre</label>
+
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="nombre"
+						id="nombre" placeholder="text" value="{{evento.nombre}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputText" class="col-sm-3 control-label">Descripci&oacute;n</label>
+
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="descripcion"
+						id="descripcion" placeholder="text" value="{{evento.descripcion}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputAuthor" class="col-sm-3 control-label">Direcci&oacute;n</label>
+
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="direccion"
+						id="direccion" placeholder="text" value="{{evento.direccion}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPriority" class="col-sm-3 control-label">Fecha Inicio</label>
+
+				<div class="col-sm-6">
+					<input type="datetime-local" class="form-control" name="fechaInicio"
+						id="fechaInicio" placeholder="priority" value="{{evento.fechaInicio}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPriority" class="col-sm-3 control-label">Fecha Fin</label>
+
+				<div class="col-sm-6">
+					<input type="datetime-local" class="form-control"
+						name="fechaFin" id="inputPriority" placeholder="FechaFin" value="{{evento.fechaFin}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPriority" class="col-sm-3 control-label">Longitud</label>
+
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="longitud"
+						id="longitud" placeholder="priority" value="{{evento.longitud}}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPriority" class="col-sm-3 control-label">Latitud</label>
+
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="latitud"
+						id="latitud" placeholder="priority" value="{{evento.latitud}}">
+				</div>
+			</div>
+            
+            <div class="form-group text-center">
+                <button type="submit" value="submit" class="btn btn-warning">Actualizar</button>
+                
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+{% endblock content %}
