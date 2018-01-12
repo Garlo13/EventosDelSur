@@ -5,8 +5,9 @@ import jinja2
 #import googlemaps
 
 from google.appengine.ext import ndb
+from google.appengine.api import users
 
-from models import Eventos, Usuario
+from models import Eventos
 from __builtin__ import int
 
 
@@ -35,13 +36,16 @@ class ShowEventos(BaseHandler):
 class CrearEvento(BaseHandler):
     
     def post(self):
-        usuario = Usuario(nombre="ADRI",email="cardenitas96@gmail.com")
-        usuario.put()
+        #usuario = Usuario(nombre="ADRI",email="cardenitas96@gmail.com")
+        #usuario.put()
+        user = users.get_current_user()
+        if user:
+            userEmail = user.email()
         
         evento = Eventos(nombre=self.request.get('nombre'),
                          descripcion=self.request.get('descripcion'),
                          direccion=self.request.get('direccion'),
-                         creador= usuario,
+                         creador= userEmail,
                          latitud=float(self.request.get('latitud')),
                          longitud=float(self.request.get('longitud')),
                          fechaInicio=self.request.get('fechaInicio'),
@@ -91,3 +95,13 @@ class OpenEvento(BaseHandler):
 
     def post(selfs, evento_id):
         return webapp2.redirect('/')
+    
+class Logout(BaseHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+            logout = users.create_logout_url('/')
+            return self.redirect(logout)
+            
+        
+        
