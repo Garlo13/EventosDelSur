@@ -6,6 +6,7 @@ app = webapp2.WSGIApplication([
         ('/new', CrearEvento),
         ('/delete/([\d]+)', DeleteEvento),
         ('/edit/([\d]+)', EditEvento),
+        ('/like/([\d]+)', OpenEvento),
         ('/open/([\d]+)', OpenEvento),
         ('/logout', Logout)
         ],

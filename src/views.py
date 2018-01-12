@@ -49,7 +49,11 @@ class CrearEvento(BaseHandler):
                          latitud=float(self.request.get('latitud')),
                          longitud=float(self.request.get('longitud')),
                          fechaInicio=self.request.get('fechaInicio'),
-                         fechaFin=self.request.get('fechaFin'))
+                         fechaFin=self.request.get('fechaFin'),
+                         likes = [],
+                         comentarios =[]
+                         )
+                         
         evento.put()
         return webapp2.redirect('/')
     
@@ -87,14 +91,29 @@ class OpenEvento(BaseHandler):
     def get(self, evento_id):
         iden = int(evento_id)
         evento = Eventos.get_by_id(iden)
+        user = users.get_current_user()
         #gmaps = googlemaps.Client(key='ce467785e4e6b7dc282e86e0f2268c26')
         #reverse_geocode_result = gmaps.reverse_geocode((evento.latitud, evento.longitud))
         #now = datetime.now()
         #self.render_template('verEvento.html', {'evento':evento, 'map':reverse_geocode_result})
-        self.render_template('verEvento.html', {'evento': evento})
+        self.render_template('verEvento.html', {'evento': evento, 'user':user})
 
-    def post(selfs, evento_id):
-        return webapp2.redirect('/')
+    def post(self, evento_id):
+        iden = int(evento_id)
+        evento = Eventos.get_by_id(iden)
+        usuario = users.get_current_user()
+        email = usuario.email()
+        if not evento.likes :
+            evento.likes = [email]
+        else:
+            evento.likes.append(email) 
+        
+        evento.put()
+        self.render_template('verEvento.html', {'evento': evento, 'user':usuario})
+        #return webapp2.redirect('/open/')
+
+    
+    
     
 class Logout(BaseHandler):
     def get(self):
