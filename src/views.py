@@ -120,8 +120,9 @@ class OpenEvento(BaseHandler):
             evento.comentarios.append(comentario) 
         
         evento.put()
-        self.render_template('verEvento.html', {'evento': evento, 'user':usuario})
-        #return webapp2.redirect('/open/')
+        
+        #self.render_template('verEvento.html', {'evento': evento, 'user':usuario})
+        return webapp2.redirect('/open/'+evento_id)
 
 class LikeEvento(BaseHandler):
     def get(self, evento_id):
@@ -129,15 +130,16 @@ class LikeEvento(BaseHandler):
         evento = Eventos.get_by_id(iden)
         usuarioSesion = users.get_current_user()
         email = usuarioSesion.email()
-        usuario = Usuario.query().filter(Usuario.email == email).get()
+       # usuario = Usuario.query().filter(Usuario.email == email).get()
         
         if not evento.likes :
-            evento.likes = [usuario]
+            evento.likes = [email]
         else:
-            evento.likes.append(usuario) 
+            evento.likes.append(email) 
     
         evento.put()
-        self.render_template('verEvento.html', {'evento': evento, 'user':usuario})
+        
+        return webapp2.redirect('/open/'+evento_id)
         
 class Logout(BaseHandler):
     def get(self):

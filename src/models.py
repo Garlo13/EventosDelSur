@@ -19,8 +19,8 @@ class Eventos(ndb.Model):
     longitud = ndb.FloatProperty()
     fechaInicio = ndb.StringProperty()
     fechaFin = ndb.StringProperty()
-    likes = ndb.StructuredProperty(Usuario, repeated=True)
-#    likes = ndb.StringProperty(repeated=True)
+   # likes = ndb.StructuredProperty(Usuario, repeated=True)
+    likes = ndb.StringProperty(repeated=True)
     comentarios = ndb.StructuredProperty(Comentario, repeated=True)
     
     
