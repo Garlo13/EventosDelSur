@@ -108,9 +108,9 @@
 
 				<div class="col-sm-6">
 					<label class="lead">{{evento.likes.__len__()}}</label>
-					{%if user.email() not in evento.likes%}
-					<button type="submit" value="submit" class="btn btn-success">Like</button>
-				<!--  	<a class="btn btn-info" href="/like/{{ evento.key.id()}}" >Like</a> -->
+					{%if user not in evento.likes%}
+					<!-- <button type="submit" value="submit" class="btn btn-success">Like</button>  -->
+				  	<a class="btn btn-info" href="/like/{{ evento.key.id()}}" >Like</a>
 					{% endif %}
 					
 				</div>
@@ -120,7 +120,19 @@
 			<div style="width: 930px; height: 600px; margin: 10px;">
 				<div id="map-canvas" style="width: 100%; height: 90%">{{map}}</div>
 			</div>
+			
+			<div class="form-group">
+				<label for="inputText" class="col-sm-3 control-label">Comentario</label>
 
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="comentario"
+						id="comentario">
+				</div>
+				
+				<button type="submit" value="submit" class="btn btn-success">Enviar comentario</button>
+				
+			</div>
+			
 			<div class="form-group text-center">
 				<a class="btn btn-info" href="/" >Volver</a>
 			</div>
