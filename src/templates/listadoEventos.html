@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
+
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ88yUrHYcUimr-N19KWUK5W5PjDLjrzQ&callback=initMap"
+	async defer>
+    </script>
+
+<script src="../static/js/jquery.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+<link href="../static/css/style.css" rel="stylesheet">
+
+<script type="text/javascript">
+var jsondic = JSON.parse({{jsondic}});
+console.log(jsondic);
+$(document).ready(function () {
+    initMap();
+});
+
+</script>
+
+</head>
+
+
 <div class="row">
     <div class="col-lg-12 text-center">
         <h1>Eventos <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></h1>
@@ -51,7 +79,12 @@
             {% endfor %}
             </tbody>
         </table>
+        
+        <div class="form-group" style="height: 500px; margin: 10px;">
+				<div id="map-canvas" style="width: 100%; height: 100%"></div>
+		</div>
     </div>
+    
     <div class="col-md-2"></div>
 </div>
 {% else %}
@@ -69,12 +102,46 @@
 {% endif %}
 
       <script type="text/javascript">
+      
             window.onload = function() {
                 if(!window.location.hash) {
                     window.location = window.location + '#loaded';
                     window.location.reload();
                 }
+
             }
-        </script>
-        
+       
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    center: new google.maps.LatLng('36.715502', ' -4.477077'),
+                    zoom: 15,
+                    draggable: true
+                });
+                
+                /*
+                
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng('36.715502', '36.715502'),
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    title: '36.715502'
+                });
+				
+                console.log('hola');
+                console.log('36.715502');
+                
+                var infowindow = new google.maps.InfoWindow({
+                    content: '36.715502'
+                });
+                // Adding a click event to the marker
+                google.maps.event.addListener(marker, 'click', function () {
+                    // Calling the open method of the infoWindow
+                    infowindow.open(map, marker);
+                });
+                
+                */
+            };
+            
+            
+        </script>   
 {% endblock content %}

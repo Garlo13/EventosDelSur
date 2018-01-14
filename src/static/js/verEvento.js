@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 var latitud, longitud, nombreEvento, tags;
-var retrievedObject = localStorage.getItem('evento');
-console.log('retrievedObject: ', JSON.parse(retrievedObject));
+var tagMalaga = ['Malaga'];
+window.flickrTags= !window.flickrTags.length ==0 ? window.flickrTags : tagMalaga;
 
-var jsonEvento = JSON.parse(retrievedObject);
 
 //nombreEvento = jsonEvento.nombre;
 

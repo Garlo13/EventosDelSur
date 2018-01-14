@@ -2,7 +2,6 @@ from datetime import datetime
 import os
 import webapp2
 import jinja2
-#import googlemaps
 import json
 
 
@@ -39,7 +38,16 @@ class ShowEventos(BaseHandler):
             
         eventos = Eventos.query()
        
-        self.render_template('listadoEventos.html',{'eventos':eventos} )
+       
+        diccionario = {}
+        for evento in eventos:
+            #diccionario[evento.nombre.encode("utf-8")]=(evento.latitud,evento.longitud)
+           
+           # diccionario= ['evento':{'nombre':evento.nombre.encode('utf-8'), 'latitud':evento.latitud, 'longitud':evento.longitud}]
+            dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+        jsondic = json.dumps(diccionario)
+        print jsondic
+        self.render_template('listadoEventos.html',{'eventos':eventos, 'jsondic':jsondic} )
        
 class CrearEvento(BaseHandler):
     
@@ -127,11 +135,7 @@ class OpenEvento(BaseHandler):
         #reverse_geocode_result = gmaps.reverse_geocode((evento.latitud, evento.longitud))
         #now = datetime.now()
         #self.render_template('verEvento.html', {'evento':evento, 'map':reverse_geocode_result})
-        nombreTags = map(lambda tag: tag.nombre.encode("utf-8"), evento.tags)
-        
-        print nombreTags
-       
-        #nombreTags = json.dumps(nombreTags)
+        nombreTags = map(lambda tag: tag.nombre.encode("utf-8"), evento.tags)      
         self.render_template('verEvento.html', {'evento': evento, 'user':usuario, 'nombreTags':nombreTags })
 
     def post(self, evento_id):
