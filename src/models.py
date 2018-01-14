@@ -6,7 +6,8 @@ class Tag(ndb.Model):
 class Usuario(ndb.Model):
     nombre = ndb.StringProperty()
     email = ndb.StringProperty()
-
+    tipoUsuario = ndb.IntegerProperty()
+    
 class Comentario(ndb.Model):
     autor = ndb.StructuredProperty(Usuario)
     comentario = ndb.StringProperty()

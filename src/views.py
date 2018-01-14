@@ -31,32 +31,50 @@ class ShowEventos(BaseHandler):
     def get(self):
         user = users.get_current_user()
         usuario = Usuario.query().filter(Usuario.email == user.email()).get()
+        tags = Tag.query()
         
         if not usuario:
-            usuario = Usuario (nombre = user.nickname(), email = user.email())
+            usuario = Usuario (nombre = user.nickname(), email = user.email(), tipoUsuario = 1)
             usuario.put()
             
         eventos = Eventos.query()
-       
        
         diccionario = []
         for evento in eventos:
             diccionario.append(evento.nombre.encode('utf-8'))
             diccionario.append(evento.latitud)
             diccionario.append(evento.longitud)
-            #diccionario[evento.nombre.encode("utf-8")]=(evento.latitud,evento.longitud)
-           
-           # diccionario= ['evento':{'nombre':evento.nombre.encode('utf-8'), 'latitud':evento.latitud, 'longitud':evento.longitud}]
-        #dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
-        #jsondic = json.dumps(diccionario)
-        print diccionario
-        self.render_template('listadoEventos.html',{'eventos':eventos, 'diccionario':diccionario} )
+            
+        self.render_template('listadoEventos.html',{'eventos':eventos, 'diccionario':diccionario, 'usuario':usuario, 'tags':tags} )
        
+    def post(self):
+        seleccion = self.request.get('checks', allow_multiple = True)
+        
+        if not seleccion:
+            listaEventos = Eventos.query()
+        else:
+            listaTags = [];
+            for nombreTag in seleccion:
+                tag = Tag.query().filter(Tag.nombre == nombreTag).get()
+                listaTags.append(tag)
+            listaEventos = Eventos.query(Eventos.tags.IN(listaTags))
+            
+        user = users.get_current_user()
+        usuario = Usuario.query().filter(Usuario.email == user.email()).get()
+        tags = Tag.query()
+        
+        diccionario = []
+        for evento in listaEventos:
+            diccionario.append(evento.nombre.encode('utf-8'))
+            diccionario.append(evento.latitud)
+            diccionario.append(evento.longitud)
+            
+        self.render_template('listadoEventos.html',{'eventos':listaEventos, 'diccionario':diccionario, 'usuario':usuario, 'tags':tags} )
+        
+        
 class CrearEvento(BaseHandler):
     
     def post(self):
-        #usuario = Usuario(nombre="ADRI",email="cardenitas96@gmail.com")
-        #usuario.put()
         user = users.get_current_user()
         usuario = Usuario.query().filter(Usuario.email == user.email()).get()
         
@@ -134,10 +152,6 @@ class OpenEvento(BaseHandler):
         evento = Eventos.get_by_id(iden)
         user = users.get_current_user()
         usuario = Usuario.query().filter(Usuario.email == user.email()).get()
-        #gmaps = googlemaps.Client(key='ce467785e4e6b7dc282e86e0f2268c26')
-        #reverse_geocode_result = gmaps.reverse_geocode((evento.latitud, evento.longitud))
-        #now = datetime.now()
-        #self.render_template('verEvento.html', {'evento':evento, 'map':reverse_geocode_result})
         nombreTags = map(lambda tag: tag.nombre.encode("utf-8"), evento.tags)      
         self.render_template('verEvento.html', {'evento': evento, 'user':usuario, 'nombreTags':nombreTags })
 
@@ -158,7 +172,6 @@ class OpenEvento(BaseHandler):
         
         evento.put()
         
-        #self.render_template('verEvento.html', {'evento': evento, 'user':usuario})
         return webapp2.redirect('/open/'+evento_id)
 
 class LikeEvento(BaseHandler):
@@ -167,7 +180,6 @@ class LikeEvento(BaseHandler):
         evento = Eventos.get_by_id(iden)
         usuarioSesion = users.get_current_user()
         email = usuarioSesion.email()
-       # usuario = Usuario.query().filter(Usuario.email == email).get()
         
         if not evento.likes :
             evento.likes = [email]
