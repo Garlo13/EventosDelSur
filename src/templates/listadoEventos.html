@@ -17,10 +17,10 @@
 <link href="../static/css/style.css" rel="stylesheet">
 
 <script type="text/javascript">
-var jsondic = JSON.parse({{jsondic}});
-console.log(jsondic);
+
+console.log({{diccionario}});
 $(document).ready(function () {
-    initMap();
+    //initMap();
 });
 
 </script>
@@ -108,7 +108,7 @@ $(document).ready(function () {
                     window.location = window.location + '#loaded';
                     window.location.reload();
                 }
-
+                initMap();
             }
        
             function initMap() {
@@ -118,28 +118,29 @@ $(document).ready(function () {
                     draggable: true
                 });
                 
-                /*
-                
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng('36.715502', '36.715502'),
-                    map: map,
-                    animation: google.maps.Animation.DROP,
-                    title: '36.715502'
-                });
-				
-                console.log('hola');
-                console.log('36.715502');
-                
-                var infowindow = new google.maps.InfoWindow({
-                    content: '36.715502'
-                });
-                // Adding a click event to the marker
-                google.maps.event.addListener(marker, 'click', function () {
-                    // Calling the open method of the infoWindow
-                    infowindow.open(map, marker);
-                });
-                
-                */
+                var marketsEventos = {{diccionario}};
+
+                var i = 0;
+                while( i < marketsEventos.length){
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(marketsEventos[i+1], marketsEventos[i+2]),
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        title: marketsEventos[i+0],
+                        label: marketsEventos[i+0]
+                    });
+                    var infowindow = new google.maps.InfoWindow({
+                        content: marketsEventos[i+0]
+                    });
+
+                    i = i+3;
+                    /* Adding a click event to the marker
+                    google.maps.event.addListener(marker, 'click', function () {
+                        // Calling the open method of the infoWindow
+                        infowindow.open(map, marker);
+                    }); */
+                }
+
             };
             
             

@@ -39,15 +39,18 @@ class ShowEventos(BaseHandler):
         eventos = Eventos.query()
        
        
-        diccionario = {}
+        diccionario = []
         for evento in eventos:
+            diccionario.append(evento.nombre.encode('utf-8'))
+            diccionario.append(evento.latitud)
+            diccionario.append(evento.longitud)
             #diccionario[evento.nombre.encode("utf-8")]=(evento.latitud,evento.longitud)
            
            # diccionario= ['evento':{'nombre':evento.nombre.encode('utf-8'), 'latitud':evento.latitud, 'longitud':evento.longitud}]
-            dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
-        jsondic = json.dumps(diccionario)
-        print jsondic
-        self.render_template('listadoEventos.html',{'eventos':eventos, 'jsondic':jsondic} )
+        #dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+        #jsondic = json.dumps(diccionario)
+        print diccionario
+        self.render_template('listadoEventos.html',{'eventos':eventos, 'diccionario':diccionario} )
        
 class CrearEvento(BaseHandler):
     
