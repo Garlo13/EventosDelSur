@@ -12,7 +12,7 @@ var jsonEvento = JSON.parse(retrievedObject);
 //nombreEvento = jsonEvento.nombre;
 
 //tags = jsonEvento.tags;
-console.log(tags);
+console.log(window.flickrTags);
 
 //latitud = parseFloat(jsonEvento.latitud);
 //longitud = parseFloat(jsonEvento.longitud);
@@ -23,7 +23,7 @@ xhttp.onreadystatechange = handleResponse;
 //var lugar = document.getElementById("lugarid").value;
 var API_KEY = "ce467785e4e6b7dc282e86e0f2268c26";
 var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
-        "&format=json&api_key=" + API_KEY + "&tags=" + tags;
+        "&format=json&api_key=" + API_KEY + "&tags=" + window.flickrTags;
 console.log(url);
 xhttp.open("GET", url, true);
 xhttp.send(null);

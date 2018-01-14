@@ -38,6 +38,7 @@ class ShowEventos(BaseHandler):
             usuario.put()
             
         eventos = Eventos.query()
+       
         self.render_template('listadoEventos.html',{'eventos':eventos} )
        
 class CrearEvento(BaseHandler):
@@ -126,9 +127,11 @@ class OpenEvento(BaseHandler):
         #reverse_geocode_result = gmaps.reverse_geocode((evento.latitud, evento.longitud))
         #now = datetime.now()
         #self.render_template('verEvento.html', {'evento':evento, 'map':reverse_geocode_result})
-        #nombreTags = map(lambda tag: tag.nombre, evento.tags)
-        nombreTags = [1, "hola"]
-        nombreTags = json.dumps(nombreTags)
+        nombreTags = map(lambda tag: tag.nombre.encode("utf-8"), evento.tags)
+        
+        print nombreTags
+       
+        #nombreTags = json.dumps(nombreTags)
         self.render_template('verEvento.html', {'evento': evento, 'user':usuario, 'nombreTags':nombreTags })
 
     def post(self, evento_id):
