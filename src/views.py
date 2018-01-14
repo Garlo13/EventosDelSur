@@ -3,13 +3,14 @@ import os
 import webapp2
 import jinja2
 #import googlemaps
+import json
 
 
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
 from __builtin__ import int
-from models import Usuario, Eventos, Comentario
+from models import Usuario, Eventos, Comentario, Tag
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_environment = \
@@ -47,6 +48,14 @@ class CrearEvento(BaseHandler):
         user = users.get_current_user()
         usuario = Usuario.query().filter(Usuario.email == user.email()).get()
         
+        seleccion = self.request.get('checks', allow_multiple = True)
+        listaTags = [];
+        
+        for nombreTag in seleccion:
+            tag = Tag.query().filter(Tag.nombre == nombreTag).get()
+            listaTags.append(tag)
+        
+        
         evento = Eventos(nombre=self.request.get('nombre'),
                          descripcion=self.request.get('descripcion'),
                          direccion=self.request.get('direccion'),
@@ -56,14 +65,16 @@ class CrearEvento(BaseHandler):
                          fechaInicio=self.request.get('fechaInicio'),
                          fechaFin=self.request.get('fechaFin'),
                          likes = [],
-                         comentarios =[]
+                         comentarios =[],
+                         tags = listaTags
                          )
                          
         evento.put()
         return webapp2.redirect('/')
     
     def get(self):
-        self.render_template('CrearEvento.html',{})
+        tags = Tag.query()
+        self.render_template('CrearEvento.html', {'tags':tags})
         
 class DeleteEvento(BaseHandler):
     
@@ -78,17 +89,30 @@ class EditEvento(BaseHandler):
     def get(self,evento_id):
         iden = int(evento_id)
         evento = Eventos.get_by_id(iden)
-        self.render_template('editarevento.html', {'evento':evento})
+        tags = Tag.query()
+        
+        tagsevento = map(lambda tag: tag.nombre, evento.tags) #Devuelve una lista de nombre de eventos (strings)
+        
+        self.render_template('editarevento.html', {'evento':evento, 'tags':tags, 'tagseventos':tagsevento})
         
     def post(self,evento_id):
         iden = int(evento_id)
         evento = Eventos.get_by_id(iden)
+        
+        seleccion = self.request.get('checks', allow_multiple = True)
+        listaTags = [];
+        
+        for nombreTag in seleccion:
+            tag = Tag.query().filter(Tag.nombre == nombreTag).get()
+            listaTags.append(tag)
+        
         evento.nombre = self.request.get('nombre')
         evento.descripcion=self.request.get('descripcion')
         evento.latitud = float(self.request.get('latitud'))
         evento.longitud = float(self.request.get('longitud'))
         evento.fechaInicio=self.request.get('fechaInicio')
         evento.fechaFin=self.request.get('fechaFin')
+        evento.tags = listaTags
         evento.put()
         return webapp2.redirect('/')
 
@@ -102,7 +126,10 @@ class OpenEvento(BaseHandler):
         #reverse_geocode_result = gmaps.reverse_geocode((evento.latitud, evento.longitud))
         #now = datetime.now()
         #self.render_template('verEvento.html', {'evento':evento, 'map':reverse_geocode_result})
-        self.render_template('verEvento.html', {'evento': evento, 'user':usuario})
+        #nombreTags = map(lambda tag: tag.nombre, evento.tags)
+        nombreTags = [1, "hola"]
+        nombreTags = json.dumps(nombreTags)
+        self.render_template('verEvento.html', {'evento': evento, 'user':usuario, 'nombreTags':nombreTags })
 
     def post(self, evento_id):
         iden = int(evento_id)

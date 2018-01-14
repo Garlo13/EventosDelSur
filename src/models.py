@@ -1,5 +1,7 @@
 from google.appengine.ext import ndb
 
+class Tag(ndb.Model):
+    nombre = ndb.StringProperty()
 
 class Usuario(ndb.Model):
     nombre = ndb.StringProperty()
@@ -22,6 +24,7 @@ class Eventos(ndb.Model):
    # likes = ndb.StructuredProperty(Usuario, repeated=True)
     likes = ndb.StringProperty(repeated=True)
     comentarios = ndb.StructuredProperty(Comentario, repeated=True)
+    tags = ndb.StructuredProperty(Tag, repeated=True)
     
     
     

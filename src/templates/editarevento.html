@@ -55,6 +55,16 @@
 						name="fechaFin" id="inputPriority" placeholder="FechaFin" value="{{evento.fechaFin}}">
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<label for="inputPriority" class="col-sm-3 control-label">Latitud</label>
+
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="latitud"
+						id="latitud" placeholder="priority" value="{{evento.latitud}}">
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<label for="inputPriority" class="col-sm-3 control-label">Longitud</label>
 
@@ -63,12 +73,23 @@
 						id="longitud" placeholder="priority" value="{{evento.longitud}}">
 				</div>
 			</div>
+			
 			<div class="form-group">
-				<label for="inputPriority" class="col-sm-3 control-label">Latitud</label>
+				<label for="inputPriority" class="col-sm-3 control-label">Tags</label>
 
 				<div class="col-sm-6">
-					<input type="text" class="form-control" name="latitud"
-						id="latitud" placeholder="priority" value="{{evento.latitud}}">
+					{% for tag in tags %}
+					<div class="col-sm-4">
+						
+						{% if tag.nombre in tagseventos %}
+							<input name="checks" type="checkbox" class="check" id="{{tag.nombre}}"
+							value="{{tag.nombre}}" checked>{{tag.nombre}}
+						{% else %}
+							<input name="checks" type="checkbox" class="check" id="{{tag.nombre}}"
+							value="{{tag.nombre}}">{{tag.nombre}}
+						{% endif %}
+					</div>
+					{% endfor %}
 				</div>
 			</div>
             

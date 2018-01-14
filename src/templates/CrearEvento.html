@@ -18,8 +18,8 @@
 				<label for="inputText" class="col-sm-3 control-label">Nombre</label>
 
 				<div class="col-sm-6">
-					<input type="text" class="form-control" name="nombre"
-						id="nombre" placeholder="text">
+					<input type="text" class="form-control" name="nombre" id="nombre"
+						placeholder="Nombre">
 				</div>
 			</div>
 			<div class="form-group">
@@ -27,7 +27,7 @@
 
 				<div class="col-sm-6">
 					<input type="text" class="form-control" name="descripcion"
-						id="descripcion" placeholder="text">
+						id="descripcion" placeholder="Descripcion">
 				</div>
 			</div>
 			<div class="form-group">
@@ -35,41 +35,59 @@
 
 				<div class="col-sm-6">
 					<input type="text" class="form-control" name="direccion"
-						id="direccion" placeholder="text">
+						id="direccion" placeholder="Direccion">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="inputPriority" class="col-sm-3 control-label">Fecha Inicio</label>
-
-				<div class="col-sm-6">
-					<input type="datetime-local" class="form-control" name="fechaInicio"
-						id="fechaInicio" placeholder="priority">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPriority" class="col-sm-3 control-label">Fecha Fin</label>
+				<label for="inputPriority" class="col-sm-3 control-label">Fecha
+					Inicio</label>
 
 				<div class="col-sm-6">
 					<input type="datetime-local" class="form-control"
-						name="fechaFin" id="inputPriority" placeholder="FechaFin">
+						name="fechaInicio" id="fechaInicio">
 				</div>
 			</div>
+			<div class="form-group">
+				<label for="inputPriority" class="col-sm-3 control-label">Fecha
+					Fin</label>
+
+				<div class="col-sm-6">
+					<input type="datetime-local" class="form-control" name="fechaFin"
+						id="inputPriority">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="inputPriority" class="col-sm-3 control-label">Latitud</label>
+
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="latitud" id="latitud"
+						placeholder="Latitud">
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<label for="inputPriority" class="col-sm-3 control-label">Longitud</label>
 
 				<div class="col-sm-6">
 					<input type="text" class="form-control" name="longitud"
-						id="longitud" placeholder="priority">
+						id="longitud" placeholder="Longitud">
 				</div>
 			</div>
+
 			<div class="form-group">
-				<label for="inputPriority" class="col-sm-3 control-label">Latitud</label>
+				<label for="inputPriority" class="col-sm-3 control-label">Tags</label>
 
 				<div class="col-sm-6">
-					<input type="text" class="form-control" name="latitud"
-						id="latitud" placeholder="priority">
+					{% for tag in tags %}
+					<div class="col-sm-4">
+						<input name="checks" type="checkbox" class="check" id="{{tag.nombre}}"
+							value="{{tag.nombre}}">{{tag.nombre}}
+					</div>
+					{% endfor %}
 				</div>
 			</div>
+
 			<div class="form-group text-center">
 				<button type="submit" value="submit" class="btn btn-success">Crear</button>
 			</div>

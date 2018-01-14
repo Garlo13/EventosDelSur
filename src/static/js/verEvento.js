@@ -14,8 +14,6 @@ var jsonEvento = JSON.parse(retrievedObject);
 //tags = jsonEvento.tags;
 console.log(tags);
 
-latitud = '36.70004';
-longitud = '-4.467344';
 //latitud = parseFloat(jsonEvento.latitud);
 //longitud = parseFloat(jsonEvento.longitud);
 
@@ -40,6 +38,11 @@ $(document).ready(function () {
 
     buscarComentariosDeEvento();
 	*/
+	
+	latitud = window.geolocalizacion[0];
+	longitud = window.geolocalizacion[1];
+	console.log(window.flickrTags);
+	
     initMap();
 
 });
