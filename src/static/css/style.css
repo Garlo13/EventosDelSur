@@ -2,3 +2,28 @@
     padding: 10px;
     line-height: 35px;
 }
+
+li#logout{
+    float: right !important;
+    position: absolute !important;
+}
+
+.container2{
+    background-color: #FFFFFF;
+    margin: 20px auto;
+    padding: 40px;
+    border-radius: 25px;
+}
+
+body{
+    background-color: #B3EFB2;
+    padding-top: 70px;
+}
+
+#share-buttons img {
+    width: 45px;
+    padding: 5px;
+    border: 0;
+    box-shadow: 0;
+    display: inline;
+}

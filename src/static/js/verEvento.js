@@ -7,14 +7,7 @@ var latitud, longitud, nombreEvento, tags;
 var tagMalaga = ['Malaga'];
 window.flickrTags= !window.flickrTags.length ==0 ? window.flickrTags : tagMalaga;
 
-
-//nombreEvento = jsonEvento.nombre;
-
-//tags = jsonEvento.tags;
 console.log(window.flickrTags);
-
-//latitud = parseFloat(jsonEvento.latitud);
-//longitud = parseFloat(jsonEvento.longitud);
 
 var xhttp;
 xhttp = new XMLHttpRequest();
@@ -23,20 +16,12 @@ xhttp.onreadystatechange = handleResponse;
 var API_KEY = "ce467785e4e6b7dc282e86e0f2268c26";
 var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
         "&format=json&api_key=" + API_KEY + "&tags=" + window.flickrTags;
-console.log(url);
+
 xhttp.open("GET", url, true);
 xhttp.send(null);
 
 $(document).ready(function () {
-	/*
-    document.getElementById('nombreEvento').innerHTML = nombreEvento;
-    document.getElementById('descripcionEvento').innerHTML = jsonEvento.descripcion;
-    document.getElementById('fechaInicio').innerHTML = jsonEvento.fechainicio;
-    document.getElementById('fechaFin').innerHTML = jsonEvento.fechafin;
-    document.getElementById('direccionEvento').innerHTML = jsonEvento.direccion;
 
-    buscarComentariosDeEvento();
-	*/
 	
 	latitud = window.geolocalizacion[0];
 	longitud = window.geolocalizacion[1];
@@ -103,89 +88,4 @@ function handleResponse() {
             i++;
         }
     }
-}
-
-function enviarComentario() {
-    console.log('Envio comentario');
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost:8080/AgendaSurServerREST/webresources/agendasur.entity.comentario',
-        contentType: 'application/json',
-        dataType: "json", // data type of response
-        data: textareaToJSON(),
-        success: function (response) {
-            buscarComentariosDeEvento();
-            $('#comentarioTextarea').val('');
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert('Usted ya ha escrito una valoración.');
-        }
-    });
-}
-
-function textareaToJSON() {
-    var date = new Date();
-    return JSON.stringify({
-        "apellidosCreador": localStorage.getItem('apellidoUsuario'),
-        "comentario": $('#comentarioTextarea').val(),
-        "comentarioPK": {
-            "eventoId": jsonEvento.id,
-            "usuarioEmail": localStorage.getItem('emailUsuario')
-        },
-        "fecha": dateParser(date),
-        "nombreCreador": localStorage.getItem('nombreUsuario')
-    });
-}
-
-function dateParser(date) {
-    var day = date.getDate();
-    var month = date.getMonth();
-    var year = date.getFullYear();
-    var time = date.toLocaleTimeString();
-    return year + '-' + month + '-' + day + ' ' + time;
-}
-
-function buscarComentariosDeEvento() {
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/AgendaSurServerREST/webresources/agendasur.entity.comentario' + '/comentario/' + jsonEvento.id,
-        contentType: 'application/json',
-        dataType: "json", // data type of response
-        success: mostrarComentarios
-    });
-}
-
-function mostrarComentarios(data) {
-    var list = data == null ? [] : (data instanceof Array ? data : [data]);
-    
-    $('#div-comentarios p').remove();
-    $.each(list, function (index, comentario) {
-        var well = $('<div class="well"></div>');
-        var autor = $('<p>' + comentario.nombreCreador + ' ' + comentario.apellidosCreador + '</p>');
-        var fecha = $('<p>' + comentario.fecha + '</p>');
-        var textoComentario = $('<p>' + comentario.comentario + '</p>');
-        well.append(autor);
-        well.append(fecha);
-        well.append(textoComentario);
-        $('#div-comentarios').append(well);
-    });
-}
-
-function enviarMeGusta() {
-    console.log('Envio me gusta');
-    $.ajax({
-        type: 'PUT',
-        url: 'http://localhost:8080/AgendaSurServerREST/webresources/agendasur.entity.evento' +
-                '/' + jsonEvento.id + '/' + localStorage.getItem('emailUsuario'),
-        contentType: 'application/json',
-        dataType: "json", // data type of response
-        //data: textareaToJSON(),
-        success: function (response) {
-            alert('Ha dado un me gusta a este evento.');
-        }
-    });
-}
-
-function volver(){
-    window.location = "listadoEventos.html";
 }
