@@ -138,6 +138,7 @@ class EditEvento(BaseHandler):
         
         evento.nombre = self.request.get('nombre')
         evento.descripcion=self.request.get('descripcion')
+        evento.direccion=self.request.get('direccion')
         evento.latitud = float(self.request.get('latitud'))
         evento.longitud = float(self.request.get('longitud'))
         evento.fechaInicio=self.request.get('fechaInicio')
