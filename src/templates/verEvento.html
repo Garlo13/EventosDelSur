@@ -5,7 +5,10 @@
 
 	<script type="text/javascript">
 		window.geolocalizacion = [{{evento.latitud }},{{ evento.longitud }}];
-		window.flickrTags = {{ nombreTags|safe }}
+
+		window.flickrTags = {{ nombreTags|safe }};
+
+		window.nombreEvento = {{nombreEvento}};
 	</script>
 
 	<script

@@ -153,8 +153,11 @@ class OpenEvento(BaseHandler):
         evento = Eventos.get_by_id(iden)
         user = users.get_current_user()
         usuario = Usuario.query().filter(Usuario.email == user.email()).get()
-        nombreTags = map(lambda tag: tag.nombre.encode("utf-8"), evento.tags)      
-        self.render_template('verEvento.html', {'evento': evento, 'user':usuario, 'nombreTags':nombreTags })
+        nombreTags = map(lambda tag: tag.nombre.encode("utf-8"), evento.tags)
+        nombreEvento = [];
+        nombreEvento.append(evento.nombre.encode("utf-8"))
+
+        self.render_template('verEvento.html', {'evento': evento, 'user':usuario, 'nombreTags':nombreTags, 'nombreEvento': nombreEvento })
 
     def post(self, evento_id):
         iden = int(evento_id)

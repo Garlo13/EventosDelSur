@@ -25,6 +25,8 @@ $(document).ready(function () {
 	
 	latitud = window.geolocalizacion[0];
 	longitud = window.geolocalizacion[1];
+	nombreEvento = window.nombreEvento[0];
+	console.log(window.nombreEvento[0]);
 	console.log(window.flickrTags);
 	
     initMap();
