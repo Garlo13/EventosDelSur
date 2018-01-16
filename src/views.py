@@ -4,7 +4,6 @@ import webapp2
 import jinja2
 import json
 
-
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
@@ -200,6 +199,3 @@ class Logout(BaseHandler):
         if user:
             logout = users.create_logout_url('/')
             return self.redirect(logout)
-            
-        
-        

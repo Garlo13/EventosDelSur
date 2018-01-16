@@ -7,12 +7,11 @@ var latitud, longitud, nombreEvento, tags;
 var tagMalaga = ['Malaga'];
 window.flickrTags= !window.flickrTags.length ==0 ? window.flickrTags : tagMalaga;
 
-console.log(window.flickrTags);
 
 var xhttp;
 xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = handleResponse;
-//var lugar = document.getElementById("lugarid").value;
+
 var API_KEY = "ce467785e4e6b7dc282e86e0f2268c26";
 var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
         "&format=json&api_key=" + API_KEY + "&tags=" + window.flickrTags;
@@ -22,13 +21,9 @@ xhttp.send(null);
 
 $(document).ready(function () {
 
-	
 	latitud = window.geolocalizacion[0];
 	longitud = window.geolocalizacion[1];
 	nombreEvento = window.nombreEvento[0];
-	console.log(window.nombreEvento[0]);
-	console.log(window.flickrTags);
-	
     initMap();
 
 });
@@ -76,7 +71,7 @@ function handleResponse() {
         var SECRET;
         var SIZE = 'z';
         var i = 0;
-        //for (var i = 0; i < fotos.length; i++) {
+
         while (i < 3) {
             elem = document.createElement('img');
             FARM = fotos[i].farm;
@@ -86,7 +81,7 @@ function handleResponse() {
             urlimg = 'http://farm' + FARM + '.staticflickr.com/' + SERVER + '/' + ID + '_' + SECRET + '_' + SIZE + '.jpg';
             elem.src = urlimg;
             document.getElementById("foto" + i).appendChild(elem);
-            //document.body.appendChild(elem);
+
             i++;
         }
     }
